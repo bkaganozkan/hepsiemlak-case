@@ -1,0 +1,31 @@
+$color-dark: #000;
+$color-red: #ec9e9e;
+$color-orange: #ffa500;
+$color-golden: #ffd700;
+$color-silver: #aaa9ad;
+$color-white: #fff;
+
+
+$colors: (
+    dark: $color-dark,
+    red: $color-red,
+    orange: $color-orange,
+    golden: $color-golden,
+    silver: $color-silver,
+    white: $color-white
+);
+
+@each $name,
+$val in $colors {
+    .text-#{$name} {
+        color: $val  !important;
+    }
+
+    .btn-#{$name} {
+        background-color: $val  !important;
+    }
+
+    .bg-#{$name} {
+        background-color: $val  !important;
+    }
+}
