@@ -15,6 +15,22 @@ $colors: (
     white: $color-white
 );
 
+$fonts: (
+    bolder: bolder,
+    500:500,
+    600:600,
+    lighter:lighter,
+    italic:italic,
+    normal:normal
+);
+
+$sizes: (
+    100:100%,
+    75:75%,
+    50:50%,
+    25:25%
+);
+
 @each $name,
 $val in $colors {
     .text-#{$name} {
@@ -27,5 +43,28 @@ $val in $colors {
 
     .bg-#{$name} {
         background-color: $val  !important;
+    }
+}
+
+@each $name,
+$val in $fonts {
+    .fw-#{$name} {
+        font-weight: $val  !important;
+    }
+
+    .fs-#{$name} {
+        font-style: $val  !important
+    }
+}
+
+
+@each $name,
+$val in $sizes {
+    .w--#{$name} {
+        width: $val  !important;
+    }
+
+    .h-#{$name} {
+        height: $val  !important
     }
 }

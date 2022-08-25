@@ -1,25 +1,31 @@
 <template>
-  <container fluid>
-    <b-row class="d-flex">
-      <b-col cols="12">Uzun bir yazı 1</b-col>
-      <b-col>Uzun bir yazı 2</b-col>
-      <b-col>Uzun bir yazı 3</b-col>
-    </b-row>
-    <b-row>
-      <b-col cols="12">Uzun bir yazı 1</b-col>
-      <b-col>Uzun bir yazı 2</b-col>
-      <b-col>Uzun bir yazı 3</b-col>
-    </b-row>
-    <b-button>I am a Button</b-button>
-  </container>
+  <v-container>
+    <v-row class="" no-gutters dense justify="space-between">
+      <v-col
+        cols="12"
+        xs="5"
+        sm="5"
+        md="4"
+        lg="3"
+        xl="2"
+        class="mx-2 my-4"
+        v-for="item in products"
+        :key="item.id"
+      >
+        <ProductItem :product="item" />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
-// import ProductItem from "@/components/Product.vue";
+// If there was a not id of product i would use index as a key
+
+import ProductItem from "@/components/Product.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "List",
   components: {
-    // ProductItem,
+    ProductItem,
   },
   async mounted() {
     await this.fetchStore();
@@ -37,4 +43,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.bos-kutu {
+  background: $color-white;
+}
+</style>
