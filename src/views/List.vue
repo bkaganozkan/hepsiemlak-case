@@ -1,9 +1,14 @@
 <template>
   <v-container>
-    <v-row class="" no-gutters dense justify="space-between">
+    <v-row
+      class=""
+      no-gutters
+      dense
+      justify-md="space-between"
+      justify="center"
+    >
       <v-col
         cols="12"
-        xs="5"
         sm="5"
         md="4"
         lg="3"

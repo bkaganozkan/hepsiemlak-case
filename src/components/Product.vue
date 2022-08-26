@@ -25,7 +25,13 @@
           <!-- Currency style we can add  -->
         </v-col>
         <v-col xl="7" lg="6" md="5" xs="12" class="pl-0">
-          <v-btn small class="btn-orange text-dark"> Add Basket</v-btn>
+          <v-btn
+            @click="addtoCart(product)"
+            small
+            class="btn-orange text-dark fw-bolder"
+          >
+            Add Basket</v-btn
+          >
         </v-col>
       </v-row>
     </v-row>
@@ -33,10 +39,20 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "ProductItem",
   props: {
     product: Object,
+  },
+
+  methods: {
+    ...mapMutations({
+      addtoCart: "addToCart",
+    }),
+    addItemToCart: (product) => {
+      this.addtoCart(product);
+    },
   },
 };
 </script>

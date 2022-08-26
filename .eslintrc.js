@@ -21,9 +21,10 @@ module.exports = {
     "vue/multi-word-component-names": [
       "error",
       {
-        ignores: ["List", "Footer", "Header", "Layout"],
+        ignores: ["List", "Footer", "Header", "Layout", "Checkout"],
       },
     ],
+    "no-async-promise-executor": "warn",
   },
   overrides: [
     {

@@ -1,5 +1,5 @@
 $color-dark: #000;
-$color-red: #ec9e9e;
+$color-red: #ff4c4c;
 $color-orange: #ffa500;
 $color-golden: #ffd700;
 $color-silver: #aaa9ad;
@@ -16,6 +16,7 @@ $colors: (
 );
 
 $fonts: (
+    bold: bold,
     bolder: bolder,
     500:500,
     600:600,
@@ -23,12 +24,27 @@ $fonts: (
     italic:italic,
     normal:normal
 );
+$font-sizes: (
+    14: 14px,
+    16: 16px,
+    18: 18px,
+    20: 20px,
+    22: 22px,
+    24: 24px,
+    26: 26px,
+);
 
 $sizes: (
     100:100%,
     75:75%,
     50:50%,
     25:25%
+);
+
+$border: (
+    none:none,
+    1:1px,
+    2:2px,
 );
 
 @each $name,
@@ -58,13 +74,67 @@ $val in $fonts {
 }
 
 
+
 @each $name,
 $val in $sizes {
-    .w--#{$name} {
+    .w-#{$name} {
         width: $val  !important;
     }
 
     .h-#{$name} {
         height: $val  !important
     }
+
+    .btn-radius-#{$name} {
+        border-radius: $val  !important;
+    }
+}
+
+@each $name,
+$val in $font-sizes {
+    .f-#{$name} {
+        font-size: $val;
+    }
+}
+
+@each $name,
+$val in $border {
+
+    @if $name ==none {
+        .border-#{$name} {
+            border: none !important;
+        }
+
+    }
+
+    .border-#{$name} {
+        border: $val black solid !important;
+    }
+
+    .border-b-#{$name} {
+        border-bottom: $val black solid !important;
+    }
+
+    .border-t-#{$name} {
+        border-top: $val black solid !important;
+    }
+
+    .border-l-#{$name} {
+        border-left: $val black solid !important;
+    }
+
+    .border-r-#{$name} {
+        border-right: $val black solid !important;
+    }
+
+    .border-y-#{$name} {
+        border-bottom: $val black solid !important;
+        border-top: $val black solid !important;
+    }
+
+    .border-x-#{$name} {
+        border-right: $val black solid !important;
+        border-left: $val black solid !important;
+    }
+
 }

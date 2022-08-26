@@ -8,7 +8,8 @@ import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 
-axios.defaults.headers["Access-Control-Allow-Origin"] = "GET, POST, OPTIONS";
+axios.defaults.baseURL = "http://localhost:3000/api/";
+axios.defaults.headers["Access-Control-Allow-Origin"] = "POST, GET";
 axios.defaults.headers["Access-Control-Allow-Credentials"] = true;
 
 new Vue({

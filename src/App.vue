@@ -1,10 +1,34 @@
 <template>
   <v-app>
-    <v-main>
+    <Header />
+    <v-main class="mt-14">
       <router-view></router-view>
     </v-main>
   </v-app>
 </template>
+
+<script>
+import Header from "@/components/Header.vue";
+import { mapMutations } from "vuex";
+export default {
+  components: {
+    Header,
+  },
+  mounted() {
+    window.addEventListener("resize", this.calculateMethod);
+  },
+  destroyed() {
+    window.addEventListener("resize", this.calculateMethod);
+  },
+  methods: {
+    ...mapMutations(["calculateClientWindow"]),
+
+    calculateMethod() {
+      this.calculateClientWindow(window.innerWidth);
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
