@@ -9,7 +9,7 @@ In 'backend' directory run following command.
 
 Directory => ~/hepsiemlak-case/backend
 ```
-pip install -r requiments.txt
+pip install -r requirements.txt
 ```
 
 In hepsiemlak-case directory run below command.
