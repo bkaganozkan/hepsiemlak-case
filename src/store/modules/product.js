@@ -7,7 +7,9 @@ const productModule = {
     store: [],
     cart: {},
     outStock: [],
-    showShoppingDialog: true,
+    showShoppingDialog: false,
+    shopSuccess: false,
+    loaderActive: false,
   },
   getters: {
     getStore: (state) => {
@@ -21,9 +23,15 @@ const productModule = {
     getOutStock: (state) => {
       return state.outStock;
     },
+    getLoader: (state) => {
+      return state.loaderActive;
+    },
 
     getShowDialog: (state) => {
-      return state.showShoppingDialog;
+      return {
+        showDialog: state.showShoppingDialog,
+        shopSuccess: state.shopSuccess,
+      };
     },
 
     totalAmountofItem: (state) => {
@@ -39,8 +47,20 @@ const productModule = {
       state.store = payload;
     },
 
+    cleanCartData: (state, payload) => {
+      if (payload == "all") state.cart = {};
+      else {
+        Vue.delete(state.cart, payload);
+        state.outStock = state.outStock.filter(
+          (element) => element.item.id !== payload
+        );
+        if (!state.outStock.length) state.showShoppingDialog = false;
+      }
+    },
+
     mutateOutStock: (state, payload) => {
-      state.outStock = payload;
+      // state.outStock = payload;
+      state.outStock = payload.map((element) => state.cart[element]);
     },
 
     mutateDialog: (state, payload) => {
@@ -108,12 +128,13 @@ const productModule = {
     },
   },
   actions: {
-    fetchStore: async ({ commit }) => {
-      // I even don't know how to use curl in frontend I had no auth for this
-      // so I figure out with this way, I hope you will teach me to using curl
+    fetchStore: async ({ commit, state }) => {
+      // I figure out with this way
       // I am good at python flask, django jwt cookies & auth
+      state.store.length ? null : (state.loaderActive = true);
       let response = await axios.get("getproducts/");
       let result = response.data;
+      state.loaderActive = false;
 
       // it is the best way to manupilate the store
       commit("mutateStore", result);
@@ -125,20 +146,29 @@ const productModule = {
         orderedItems.push({ id: key, amount: state.cart[key].quantity })
       );
       // orderedItems = JSON.stringify(orderedItems);
-
-      let response = await axios.post("submitorder/", orderedItems);
-      return new Promise((resolve) => {
-        let outOfStock = [];
-        Object.keys(state.cart).forEach((key) => {
-          if (response.data[key] === 404) {
-            outOfStock.push(key);
+      if (orderedItems.length) {
+        let response = await axios.post("submitorder/", orderedItems);
+        return await new Promise((resolve) => {
+          let outOfStock = [];
+          Object.keys(state.cart).forEach((key) => {
+            if (response.data[key] === 404) {
+              outOfStock.push(key);
+            }
+          });
+          if (outOfStock.length) {
+            commit("mutateOutStock", outOfStock);
+            commit("mutateDialog", true);
+            state.shopSuccess = false;
+            resolve(false);
+          } else {
+            commit("mutateOutStock", []);
+            commit("mutateDialog", true);
+            state.shopSuccess = true;
+            commit("cleanCartData", "all");
+            resolve(true);
           }
         });
-        if (outOfStock.length) {
-          commit("mutateOutStock", outOfStock);
-          resolve(false);
-        } else resolve(true);
-      });
+      }
     },
   },
 };

@@ -15,6 +15,7 @@ export default {
     Header,
   },
   mounted() {
+    this.calculateClientWindow(window.innerWidth);
     window.addEventListener("resize", this.calculateMethod);
   },
   destroyed() {

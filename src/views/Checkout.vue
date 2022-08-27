@@ -45,7 +45,7 @@
       </v-btn-toggle>
 
       <!-- Button Section -->
-      <v-btn-toggle class="pa-4" v-else>
+      <v-btn-toggle class="pa-4" v-if="clientSide === 'xs'">
         <v-btn
           replace
           @click="routeTo('/')"
@@ -85,7 +85,6 @@ export default {
 
     async cartCheck() {
       this.outStock = await this.submitCart();
-      console.log(this.outStock);
     },
   },
 

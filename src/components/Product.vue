@@ -1,5 +1,5 @@
 <template>
-  <v-card :key="product.id" class="pa-4" elevation="2">
+  <v-card :key="product.id" class="pa-4" elevation="2" data-test="product">
     <v-row class="mb-4 d-flex justify-center">
       <v-img
         :src="product.image"
@@ -26,6 +26,7 @@
         </v-col>
         <v-col xl="7" lg="6" md="5" xs="12" class="pl-0">
           <v-btn
+            data-test="addItem"
             @click="addtoCart(product)"
             small
             class="btn-orange text-dark fw-bolder"
