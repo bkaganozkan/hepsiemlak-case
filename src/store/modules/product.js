@@ -83,30 +83,6 @@ const productModule = {
         };
         Vue.set(state.cart, payload.id, newValue);
       }
-
-      // Below aproach is the first I thought after that, above aproach
-      // is more effective than below.
-
-      // if (
-      //   state.cart.length &&
-      //   state.cart.some((val) => val.item.id === payload.id)
-      // ) {
-      //   state.cart.map((val) => {
-      //     if (val.item.id == payload.id) {
-      //       val.quantity++;
-      //     }
-      //   });
-      // } else {
-      //   state.cart.push({
-      //     item: payload,
-      //     quantity: 1,
-      //   });
-      // }
-      // state.cart.map(
-      //   (value) =>
-      //     (value.totalAmount =
-      //       Math.round(value.item.price * value.quantity * 100) / 100)
-      // );
     },
 
     // Remove product from cart

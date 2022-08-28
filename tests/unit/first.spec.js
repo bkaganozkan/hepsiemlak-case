@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import { mount, createLocalVue, shallowMount } from "@vue/test-utils";
 import Vuex from "vuex";
 import List from "@/views/List";
 import Checkout from "@/views/Checkout.vue";
@@ -13,12 +13,6 @@ axios.defaults.headers["Access-Control-Allow-Credentials"] = true;
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
-
-// let mockAxiosGetResult;
-// jest.mock('axios', () => ({
-//   get: jest.fn(() => Promise.resolve(mockAxiosGetResult)),
-//   post: jest.fn((listItem) => Promise.resolve(mockAxiosPostResult))
-// }));
 
 describe("List", () => {
   let store;
@@ -39,8 +33,9 @@ describe("List", () => {
     expect(store.getters.getLoader).toEqual(false);
   });
 
-  it("Add Item to Cart", async () => {
+  it("Complete the shopping => add item to cart", async () => {
     const wrapper = mount(List, { store, localVue, axios, router });
+    // Add item to cart
     await store.dispatch("fetchStore");
     expect(wrapper.findAllComponents({ name: "ProductItem" }).exists()).toBe(
       true
@@ -51,13 +46,18 @@ describe("List", () => {
       .find(".btn-orange")
       .trigger("click");
     expect(Object.keys(store.getters.getCart)).toHaveLength(1);
-    // router.push("/checkout");
-    // console.log(wrapper.find(".btn-orange"));
-    // wrapper
-    //   .findComponent({ name: "Checkout" })
-    //   .find(".btn-orange")
-    //   .trigger("click");
-    // // console.log(Checkout);
-    // expect(Object.keys(store.getters.getCart)).toHaveLength(0);
+  });
+
+  it("Complete the shopping => checkout, cleaned data", async () => {
+    store.getters.getClientSide = () => true;
+    await shallowMount(Checkout, {
+      store,
+      localVue,
+      axios,
+    });
+
+    // Complete checkout
+    await store.dispatch("submitCart");
+    expect(Object.keys(store.getters.getCart)).toHaveLength(0);
   });
 });

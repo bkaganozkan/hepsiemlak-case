@@ -6,9 +6,9 @@ import axios from "axios";
 // import "@/assets/style.scss";
 import vuetify from "./plugins/vuetify";
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
+axios.defaults.baseURL = process.env.VUE_APP_HOST + process.env.VUE_APP_API;
 
-axios.defaults.baseURL = "http://localhost:3000/api/";
 axios.defaults.headers["Access-Control-Allow-Origin"] = "POST, GET";
 axios.defaults.headers["Access-Control-Allow-Credentials"] = true;
 
